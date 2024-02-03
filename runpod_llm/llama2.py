@@ -4,8 +4,8 @@ import emoji
 import time
 from typing import Any, List, Dict, Optional, Iterator
 
-from runpod.models import Result, StreamResult
-from runpod.core import RunpodBaseLLM
+from runpod_llm.models import Result, StreamResult
+from runpod_llm.core import RunpodBaseLLM
 from langchain_core.callbacks.manager import CallbackManagerForLLMRun
 from langchain_core.language_models.llms import LLM
 from langchain_core.outputs import GenerationChunk, LLMResult

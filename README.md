@@ -1,3 +1,6 @@
+# Runpod LLM API Endpoint Lib for LangChain
+[![PyPI version](https://badge.fury.io/py/langchain-runpod-llm.svg)](https://badge.fury.io/py/langchain-runpod-llm)
+
 ## Installation
 
 ```

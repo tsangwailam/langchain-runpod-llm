@@ -1,8 +1,10 @@
+"""Core class for implementing  LLM."""
 from typing import Any, List, Optional
 from langchain_core.language_models.llms import LLM
 
 
-class bcolors:
+class TerminalColors:
+    """Colors for terminal output."""
     HEADER = '\033[95m'
     OKBLUE = '\033[94m'
     OKCYAN = '\033[96m'
@@ -42,7 +44,7 @@ class RunpodBaseLLM(LLM):
                  ):
         super().__init__()
         self.verbose = verbose
-        if apikey == None:
+        if apikey is None:
             raise ValueError(
                 "Please set your Runpod API key in the RunpodLlama2LLM class.")
         self.apikey = apikey
@@ -52,4 +54,4 @@ class RunpodBaseLLM(LLM):
                        ):
         if self.verbose:
             print(
-                f"\n\r{bcolors.OKGREEN}[RunpodLlama2LLM:PROMPTS]{bcolors.ENDC}\n{prompt}\n{bcolors.OKGREEN}[/PROMPTS]{bcolors.ENDC}")
+                f"\n\r{TerminalColors.OKGREEN}[RunpodLlama2LLM:PROMPTS]{TerminalColors.ENDC}\n{prompt}\n{TerminalColors.OKGREEN}[/PROMPTS]{TerminalColors.ENDC}")

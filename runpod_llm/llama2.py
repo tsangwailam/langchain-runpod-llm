@@ -1,20 +1,24 @@
-import requests
-import json
-import emoji
-import time
+"""Implementation Llama2 connector."""
 from typing import Any, List, Dict, Optional, Iterator
+import time
+import json
+
+from langchain_core.callbacks.manager import CallbackManagerForLLMRun
+from langchain_core.outputs import GenerationChunk
+import requests
+import emoji
 
 from runpod_llm.models import Result, StreamResult
 from runpod_llm.core import RunpodBaseLLM
-from langchain_core.callbacks.manager import CallbackManagerForLLMRun
-from langchain_core.language_models.llms import LLM
-from langchain_core.outputs import GenerationChunk, LLMResult
+
 
 IN_PROGRESS = "IN_PROGRESS"
 COMPLETED = "COMPLETED"
+REQUEST_TIMEOUT = 30
 
 
-class bcolors:
+class TerminalColors:
+    """Colors for terminal output."""
     HEADER = '\033[95m'
     OKBLUE = '\033[94m'
     OKCYAN = '\033[96m'
@@ -42,6 +46,7 @@ def _stream_response_to_generation_chunk(
 
 
 class RunpodLlama2Option:
+    """Options for Llama2."""
 
     max_tokens: int = 100
     """Maximum number of tokens to generate per output sequence."""
@@ -88,6 +93,9 @@ class RunpodLlama2Option:
 
 
 class RunpodLlama2(RunpodBaseLLM):
+    """Implementation of Llama2 LLM connector."""
+
+    verbose: bool = False
 
     options: Optional[RunpodLlama2Option] = None
     llm_type: Optional[str] = "7b"
@@ -119,7 +127,7 @@ class RunpodLlama2(RunpodBaseLLM):
 
         if self.verbose:
             print(
-                f"\n{bcolors.OKGREEN}[RunpodLlama2LLM:Init]{bcolors.ENDC}\ntype: {self.llm_type} options: {self.options}\n{bcolors.OKGREEN}[/Init]{bcolors.ENDC}\n")
+                f"\n{TerminalColors.OKGREEN}[RunpodLlama2LLM:Init]{TerminalColors.ENDC}\ntype: {self.llm_type} options: {self.options}\n{TerminalColors.OKGREEN}[/Init]{TerminalColors.ENDC}\n")
 
     @property
     def _llm_type(self) -> str:
@@ -157,7 +165,7 @@ class RunpodLlama2(RunpodBaseLLM):
                     'accept': 'application/json',
                     'authorization': self.apikey,
                     'content-type': 'application/json',
-                }
+                }, timeout=REQUEST_TIMEOUT,
             )
         else:
             return requests.get(
@@ -165,7 +173,7 @@ class RunpodLlama2(RunpodBaseLLM):
                     'accept': 'application/json',
                     'authorization': self.apikey,
                     'content-type': 'application/json',
-                }
+                }, timeout=REQUEST_TIMEOUT,
             )
 
     def _call(
@@ -198,7 +206,7 @@ class RunpodLlama2(RunpodBaseLLM):
             # cast the resul
             res = Result(**result)
             if self.verbose:
-                print(f"\n{bcolors.OKGREEN}[RunpodLlama2LLM:RESPONSE]\n{bcolors.ENDC} delayTime: {res.delayTime} executionTime: {res.executionTime} input_tokens: {res.output.input_tokens} output_tokens: {res.output.output_tokens}\n{bcolors.OKGREEN}[/RESPONSE]{bcolors.ENDC}\n")
+                print(f"\n{TerminalColors.OKGREEN}[RunpodLlama2LLM:RESPONSE]\n{TerminalColors.ENDC} delayTime: {res.delayTime} executionTime: {res.executionTime} input_tokens: {res.output.input_tokens} output_tokens: {res.output.output_tokens}\n{TerminalColors.OKGREEN}[/RESPONSE]{TerminalColors.ENDC}\n")
             # get the text output
             texts = res.output.text
             # return join text
@@ -263,7 +271,7 @@ class RunpodLlama2(RunpodBaseLLM):
             # output the stream text
             for s in status.stream:
                 # if self.verbose:
-                #     print(f"\n{bcolors.OKGREEN}[RunpodLlama2LLM:RESPONSE]\n{bcolors.ENDC} input_tokens: {res.output.input_tokens} output_tokens: {res.output.output_tokens}\n{bcolors.OKGREEN}[/RESPONSE]{bcolors.ENDC}\n")
+                #     print(f"\n{TerminalColors.OKGREEN}[RunpodLlama2LLM:RESPONSE]\n{TerminalColors.ENDC} input_tokens: {res.output.input_tokens} output_tokens: {res.output.output_tokens}\n{TerminalColors.OKGREEN}[/RESPONSE]{TerminalColors.ENDC}\n")
                 for t in s.output.text:
                     yield t
 

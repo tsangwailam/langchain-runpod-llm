@@ -1,0 +1,47 @@
+[project]
+name = "runpod"
+dynamic = ["version", "dependencies"]
+description = "🐍 | Python library for langchain using RunPod API endpoint as LLM."
+readme = { file = "README.md", content-type = "text/markdown" }
+requires-python = ">=3.9"
+license = { text = "MIT License" }
+authors = [
+    { name = "William Tsang", email = "contact@williamtsang.me" },    
+]
+keywords = [
+    "runpod",
+    "ai",
+    "langchain",
+    "llm",
+    "llama2",
+    "SDK",
+    "API",
+    "python",
+    "library",
+]
+classifiers = [
+    "Environment :: Web Environment",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",    
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Topic :: Internet :: WWW/HTTP",
+    "Topic :: Internet :: WWW/HTTP :: Dynamic Content",
+]
+
+[project.urls]
+Homepage = "https://github.com/tsangwailam/langchain-runpod-llm"
+Documentation = "https://github.com/tsangwailam/langchain-runpod-llm/blob/main/README.md"
+Repository = "https://github.com/tsangwailam/langchain-runpod-llm"
+Changelog = "https://github.com/tsangwailam/langchain-runpod-llm/blob/main/CHANGELOG.md"
+"Bug Tracker" = "https://github.com/tsangwailam/langchain-runpod-llm/issues"
+
+[tool.setuptools_scm]
+version_file = "runpod-llm/_version.py"
+
+[tool.setuptools.dynamic]
+dependencies = { file = ["requirements.txt"] }

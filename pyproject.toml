@@ -41,11 +41,11 @@ Changelog = "https://github.com/tsangwailam/langchain-runpod-llm/blob/main/CHANG
 "Bug Tracker" = "https://github.com/tsangwailam/langchain-runpod-llm/issues"
 
 [build-system]
-requires = ["setuptools>=61.0.0", "wheel"]
+requires = [ "setuptools>=64", "wheel", "setuptools-git-versioning<2", ]
 build-backend = "setuptools.build_meta"
 
-[tool.setuptools_scm]
-version_file = "runpod-llm/_version.py"
+[tool.setuptools-git-versioning]
+enabled = true
 
 [tool.setuptools.dynamic]
 dependencies = { file = ["requirements.txt"] }

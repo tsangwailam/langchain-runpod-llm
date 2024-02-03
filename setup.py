@@ -24,7 +24,7 @@ if __name__ == "__main__":
         description="Package to use Runpod LLM API endpoint",
         long_description=long_description,
         long_description_content_type='text/markdown',
-        install_requires=install_requires,
+        # install_requires=install_requires,
         packages=find_packages(),
         url='https://github.com/tsangwailam/langchain-runpod-llm',
         project_urls={

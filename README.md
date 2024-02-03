@@ -1,4 +1,24 @@
+## Installation
+
 ```
+# Install the latest release version
+pip install runpod-llm
+
+# or
+
+# Install the latest development version (main branch)
+pip install git+https://https://github.com/tsangwailam/langchain-runpod-llm
+```
+
+## Get Runpod API key
+
+1. Goto www.runpod.io. Create a RunPod account.
+2. From the portal, goto Settings>APIKeys
+3. Create a new API key by click the "+ API Key" button.
+
+## Usage
+
+```python
 from runpod_llm import RunpodLlama2
 
 llm = RunpodLlama2(

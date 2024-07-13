@@ -183,9 +183,6 @@ class RunpodLlama2(RunpodBaseLLM):
         run_manager: Optional[CallbackManagerForLLMRun] = None,
         **kwargs: Any,
     ) -> str:
-        if stop is not None:
-            raise ValueError("stop kwargs are not permitted.")
-
         self._print_prompts(prompt)
 
         #  call the requests
@@ -209,8 +206,20 @@ class RunpodLlama2(RunpodBaseLLM):
                 print(f"\n{TerminalColors.OKGREEN}[RunpodLlama2LLM:RESPONSE]\n{TerminalColors.ENDC} delayTime: {res.delayTime} executionTime: {res.executionTime} input_tokens: {res.output.input_tokens} output_tokens: {res.output.output_tokens}\n{TerminalColors.OKGREEN}[/RESPONSE]{TerminalColors.ENDC}\n")
             # get the text output
             texts = res.output.text
-            # return join text
-            return emoji.emojize(str.join("\n\n", texts))
+            # make one string of result
+            text = str.join("\n\n", texts)
+            # stop implemetation
+            if stop is not None and len(stop) > 0:
+                index = len(text)
+                # find nearest index stop condtion
+                for stop_word in stop:
+                    found_index = text.find(stop_word)
+                    if found_index != -1 and found_index < index:
+                        index = found_index
+                # take the substring until the neasest stop condition
+                text = text[:index]
+            # return text
+            return emoji.emojize(text)
         else:
             raise ConnectionError(response.reason)
 
